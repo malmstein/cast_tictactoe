@@ -26,7 +26,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.MediaRouteActionProvider;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
-import android.support.v7.media.MediaRouter.RouteInfo;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -94,7 +93,7 @@ public class GameActivity extends ActionBarActivity {
 
         mGameChannel = new TicTacToeChannel();
 
-        mMediaRouter = MediaRouter.getInstance(getApplicationContext());
+        mMediaRouter =  MediaRouter.getInstance(getApplicationContext());
         mMediaRouteSelector = new MediaRouteSelector.Builder()
                 .addControlCategory(CastMediaControlIntent.categoryForCast(APP_ID))
                 .build();
@@ -285,7 +284,7 @@ public class GameActivity extends ActionBarActivity {
     /**
      * Called when a user selects a route.
      */
-    private void onRouteSelected(RouteInfo route) {
+    private void onRouteSelected(MediaRouter.RouteInfo route) {
         Log.d(TAG, "onRouteSelected: " + route.getName());
 
         CastDevice device = CastDevice.getFromBundle(route.getExtras());
@@ -295,7 +294,7 @@ public class GameActivity extends ActionBarActivity {
     /**
      * Called when a user unselects a route.
      */
-    private void onRouteUnselected(RouteInfo route) {
+    private void onRouteUnselected(MediaRouter.RouteInfo route) {
         Log.d(TAG, "onRouteUnselected: " + route.getName());
         setSelectedDevice(null);
     }
@@ -440,13 +439,13 @@ public class GameActivity extends ActionBarActivity {
      */
     private class MediaRouterCallback extends MediaRouter.Callback {
         @Override
-        public void onRouteSelected(MediaRouter router, RouteInfo route) {
+        public void onRouteSelected(MediaRouter router, MediaRouter.RouteInfo route) {
             Log.d(TAG, "onRouteSelected: " + route);
             GameActivity.this.onRouteSelected(route);
         }
 
         @Override
-        public void onRouteUnselected(MediaRouter router, RouteInfo route) {
+        public void onRouteUnselected(MediaRouter router, MediaRouter.RouteInfo route) {
             Log.d(TAG, "onRouteUnselected: " + route);
             GameActivity.this.onRouteUnselected(route);
         }
